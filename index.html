@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MaskingTool</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <div class="brand">
+          <h1>MaskingTool</h1>
+          <p>画像モザイク編集ツール</p>
+        </div>
+        <button id="themeToggleBtn" class="btn ghost" type="button">Dark</button>
+      </header>
+
+      <section class="card collapsible" data-collapsible>
+        <div class="section-head">
+          <h2>ツール</h2>
+          <button class="collapse-btn" type="button" aria-expanded="true">▾</button>
+        </div>
+        <div class="section-body toolbar">
+          <label class="file-label btn primary">
+            画像を選択
+            <input id="fileInput" type="file" accept="image/*" />
+          </label>
+          <div class="zoom-wrap tool">
+            <span>ズーム</span>
+            <strong id="zoomValue">100%</strong>
+          </div>
+          <button id="undoBtn" class="btn" type="button">UNDO</button>
+          <button id="redoBtn" class="btn" type="button">REDO</button>
+          <button id="clearMasksBtn" class="btn" type="button">全マスク削除</button>
+          <button id="resetBtn" class="btn danger" type="button">リセット</button>
+        </div>
+      </section>
+
+      <section class="card collapsible" data-collapsible>
+        <div class="section-head">
+          <h2>マスク設定</h2>
+          <button class="collapse-btn" type="button" aria-expanded="true">▾</button>
+        </div>
+        <div class="section-body mask-panel">
+          <div class="mask-tabs" role="tablist" aria-label="マスクタイプ">
+            <button id="tabMosaic" class="tab active" type="button" role="tab" aria-selected="true">
+              モザイク
+            </button>
+            <button id="tabBlack" class="tab" type="button" role="tab" aria-selected="false">
+              黒ベタ
+            </button>
+          </div>
+
+          <div id="panelMosaic" class="mask-controls">
+            <div class="field compact">
+              <label for="mosaicSize">モザイク細かさ</label>
+              <div class="inline-input">
+                <input id="mosaicSize" type="range" min="4" max="80" step="1" value="16" />
+                <span id="mosaicSizeValue">16</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="panelBlack" class="mask-controls hidden">
+            <div class="field compact">
+              <label for="blackBarCount">黒ベタ本数</label>
+              <select id="blackBarCount">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <div class="field compact">
+              <label for="blackGap">ピクセル間隔</label>
+              <input id="blackGap" type="number" min="0" max="2000" step="1" value="16" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card collapsible" data-collapsible>
+        <div class="section-head">
+          <h2>出力</h2>
+          <button class="collapse-btn" type="button" aria-expanded="true">▾</button>
+        </div>
+        <div class="section-body export-panel">
+          <div class="field">
+            <label for="fileNameInput">ファイル名</label>
+            <input id="fileNameInput" type="text" value="masking-output" maxlength="120" />
+          </div>
+          <div class="field">
+            <label for="folderNameInput">保存フォルダ</label>
+            <div class="folder-row">
+              <input id="folderNameInput" type="text" value="未選択" readonly />
+              <button id="selectFolderBtn" class="btn" type="button">フォルダ選択</button>
+            </div>
+          </div>
+          <button id="exportBtn" class="btn primary" type="button">PNG出力</button>
+          <p id="exportStatus" class="status" aria-live="polite"></p>
+        </div>
+      </section>
+
+      <section class="card collapsible" data-collapsible>
+        <div class="section-head">
+          <h2>ヒント</h2>
+          <button class="collapse-btn" type="button" aria-expanded="true">▾</button>
+        </div>
+        <div class="section-body hint">
+          <p>画像を選択またはドロップし、ドラッグで範囲指定してマスクレイヤーを作成します。</p>
+          <p>作成後はレイヤーをドラッグで移動、右下ハンドルでサイズ変更できます。</p>
+          <p>黒ベタマスクは上部ハンドルで回転できます。</p>
+          <p>macOSは COMMAND + ホイール、Windowsは CTRL + ホイールで拡大・縮小できます。</p>
+        </div>
+      </section>
+
+      <section id="stageWrap" class="stage-wrap card">
+        <div id="stageViewport" class="stage-viewport">
+          <div id="stage" class="stage" aria-label="編集キャンバス">
+            <canvas id="baseCanvas"></canvas>
+            <div id="overlay" class="overlay"></div>
+            <div id="selectionBox" class="selection-box hidden"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="credit">
+      2026(c)
+      <a href="https://x.com/gatuwo_jp" target="_blank" rel="noopener noreferrer">@gatuwo_jp</a>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
