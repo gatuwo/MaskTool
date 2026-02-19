@@ -2,7 +2,12 @@
 
 画像の任意範囲にモザイクまたは黒ベタマスクを適用するデスクトップアプリです。
 
-## 起動
+## 利用者向け（ターミナル不要）
+
+- インストール手順: `docs/INSTALL_GUIDE_JA.md`
+- リリースノート雛形: `docs/RELEASE_NOTES_JA_TEMPLATE.md`
+
+## 開発者向け起動
 
 ```bash
 npm install
