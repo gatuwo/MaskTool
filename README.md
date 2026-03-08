@@ -2,6 +2,11 @@
 
 画像の任意範囲にモザイクまたは黒ベタマスクを適用するデスクトップアプリです。
 
+## Creator
+
+- `@gatuwo_jp`
+- X: `https://x.com/gatuwo_jp`
+
 ## 利用者向け（ターミナル不要）
 
 - インストール手順: `docs/INSTALL_GUIDE_JA.md`
